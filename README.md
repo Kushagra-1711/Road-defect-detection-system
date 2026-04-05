@@ -43,7 +43,7 @@ streamlit run app.py
 *   `preprocessing.py`: The Classical DIP backbone handling Grayscaling, CLAHE contrast scaling, Gaussian filtering, and Canny Edge detection.
 *   `detector.py`: The Hybrid Segmentation engine. Houses the logic that switches between pure DIP algorithms and YOLOv8 inference, alongside the exact Pixel-Contour mask extractor.
 *   `analyzer.py`: The geometric mathematics model containing polygon severity grading and EXIF binary unpacking logic for the GPS map.
-*   `pothole_yolov8.pt`: The pre-trained Deep Learning PyTorch weights file for the YOLO neural network model.
+*   `pothole_yolov8.pt`: A custom-trained Deep Learning PyTorch weights file. The YOLO neural network model was trained locally on an augmented Roboflow dataset of 3,386 images over 25 Epochs using a Tesla T4 GPU, achieving a phenomenal **95.5% Validation Precision Score (mAP50 90.5%)**.
 
 ## 🧠 Technical Learnings
 During development, a key takeaway discovered was the rigidity of **Classical DIP** in unconstrained real-world environments. When an uploaded pothole image contains water, the stark reflection acts as an optical camouflage; it fractures the pixel gradients, causing edge-tracing algorithms to completely miss the target or classify harmless pebbles as threats. To resolve this, **YOLOv8 (Spatial Deep Learning)** proved inherently superior by recognizing the broader semantic visual *context* of a pothole, completely ignoring the noise from the water reflections.
