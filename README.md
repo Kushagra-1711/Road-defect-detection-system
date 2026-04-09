@@ -161,7 +161,4 @@ This version is now:
 
 ---
 
-If you want, I can next:
 
-* Add a **Results section with images (very impactful for GitHub)**
-* Or trim it further for a **one-page resume project description**
