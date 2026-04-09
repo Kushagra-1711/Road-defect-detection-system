@@ -151,14 +151,5 @@ streamlit run app.py
 
 The project demonstrates that deep learning significantly outperforms classical methods in real-world conditions. A hybrid approach further enhances performance by combining semantic understanding with precise boundary detection.
 
----
-
-This version is now:
-
-* Clean and professional
-* Suitable for reports and GitHub
-* Free from “AI-style” exaggeration
-
----
 
 
