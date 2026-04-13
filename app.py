@@ -11,7 +11,7 @@ from analyzer import DefectAnalyzer
 
 st.set_page_config(page_title="Pothole Detection & Analysis", layout="wide")
 
-st.title("🛣️ Real-Time Pothole & Road Defect Detection")
+st.title("Real-Time Pothole & Road Defect Detection")
 st.markdown("Use Digital Image Processing (DIP) or Deep Learning (YOLOv8) to identify potholes.")
 
 # Instantiate components
@@ -53,7 +53,7 @@ if uploaded_file is not None:
     
     # If OpenCV returns None, the file is structurally flawed (e.g., an Apple HEIC file masquerading as a JPEG)
     if bgr_img is None:
-        st.error("🚨 Image Format Error! Your file appears to be an Apple HEIC iPhone image that was simply renamed to `.jpeg` without actually being converted. \n\n**To fix this:** Open your image in Windows Paint, click 'File -> Save As -> JPEG', and upload the new file!")
+        st.error("Image Format Error! Your file appears to be an Apple HEIC iPhone image that was simply renamed to `.jpeg` without actually being converted. \n\n**To fix this:** Open your image in Windows Paint, click 'File -> Save As -> JPEG', and upload the new file!")
         st.stop()
         
     img_array = cv2.cvtColor(bgr_img, cv2.COLOR_BGR2RGB)
@@ -62,7 +62,7 @@ if uploaded_file is not None:
     
     with col1:
         st.subheader("Original Image")
-        st.image(img_array, use_column_width=True)
+        st.image(img_array, width=700)
         
     with st.spinner("Processing image..."):
         # Run Preprocessing Pipeline
@@ -88,7 +88,7 @@ if uploaded_file is not None:
 
     with col2:
         st.subheader("Detected Potholes")
-        st.image(output_image, use_column_width=True)
+        st.image(output_image, width=700)
 
     # --- UI Layout ---
     # Metrics
@@ -109,13 +109,13 @@ if uploaded_file is not None:
     pothole_mask = np.ones((height, width), dtype=np.uint8) * 255  # Fill background with white
     cv2.drawContours(pothole_mask, contours, -1, 0, -1)  # Fill detected potholes with black
     
-    st.image(pothole_mask, use_column_width=True, caption="Final Extracted Pothole Mask")
+    st.image(pothole_mask, width=700, caption="Final Extracted Pothole Mask")
     
     st.markdown("### Location Mapping")
     if is_real_gps:
-        st.success(f"📍 **Precise EXIF GPS Data Found:** {loc_lat:.6f}, {loc_lon:.6f}")
+        st.success(f"**Precise EXIF GPS Data Found:** {loc_lat:.6f}, {loc_lon:.6f}")
     else:
-        st.warning(f"⚠️ **No Image EXIF GPS Found.** Showing Demonstration Coordinates: {loc_lat:.6f}, {loc_lon:.6f}")
+        st.warning(f"**No Image EXIF GPS Found.** Showing Demonstration Coordinates: {loc_lat:.6f}, {loc_lon:.6f}")
         
     map_data = pd.DataFrame({'lat': [loc_lat], 'lon': [loc_lon]})
     st.map(map_data, zoom=12)
