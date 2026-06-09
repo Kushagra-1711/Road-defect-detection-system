@@ -1,6 +1,6 @@
 
 
-# Real-Time Pothole and Road Defect Detection System
+# Road Defect Detection System
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-App-red.svg)
