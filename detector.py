@@ -9,16 +9,28 @@ except ImportError:
 
 class PotholeDetector:
     def __init__(self, yolo_model_path="pothole_yolov8.pt"):
-        self.yolo_model = None
-        if YOLO and os.path.exists(yolo_model_path):
-            self.yolo_model = YOLO(yolo_model_path)
+        self.yolo_model_path = yolo_model_path
+        self._yolo_model = None
+
+    def has_yolo_weights(self):
+        return YOLO is not None and os.path.exists(self.yolo_model_path)
+
+    @property
+    def yolo_model(self):
+        """Load YOLO weights on first use (keeps Streamlit Cloud startup light)."""
+        if self._yolo_model is None and self.has_yolo_weights():
+            self._yolo_model = YOLO(self.yolo_model_path)
+        return self._yolo_model
 
     def detect_potholes(self, original_img, processed_edges, use_yolo=False):
         contours = []
         
-        if use_yolo and self.yolo_model is not None:
+        if use_yolo and self.has_yolo_weights():
+            model = self.yolo_model
+            if model is None:
+                return contours
             # YOLOv8 Detection
-            results = self.yolo_model(original_img)
+            results = model(original_img)
             for box in results[0].boxes:
                 x1, y1, x2, y2 = map(int, box.xyxy[0].cpu().numpy())
                 

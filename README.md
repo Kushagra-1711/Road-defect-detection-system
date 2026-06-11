@@ -122,6 +122,21 @@ streamlit run app.py
 
 ---
 
+## Deploy on Streamlit Community Cloud
+
+1. Push this repo to GitHub (include **`pothole_yolov8.pt`** in the repo root, ~52 MB).
+2. Go to [share.streamlit.io](https://share.streamlit.io) → **New app** → select your repo, branch **`main`**, main file **`app.py`**.
+3. Ensure these files are in the repo:
+   - `requirements.txt` (includes `pandas`, `ultralytics`, CPU `torch`)
+   - `packages.txt` (Linux libs for OpenCV)
+   - `.streamlit/config.toml` (optional upload limit)
+4. **First deploy** may take several minutes while PyTorch installs.
+5. **YOLO loads on first use** (not at startup) to avoid Cloud memory crashes. DIP mode works even without weights.
+
+If the app still fails, open **Manage app → Logs** and look for `ModuleNotFoundError` or `CUDA out of memory` / `Killed`.
+
+---
+
 ## Key Insights
 
 * Classical DIP methods rely on pixel intensity gradients and are sensitive to environmental noise
